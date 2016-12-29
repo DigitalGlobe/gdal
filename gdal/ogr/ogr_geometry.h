@@ -249,6 +249,7 @@ class CPL_DLL OGRGeometry
     virtual OGRBoolean  Touches( const OGRGeometry * ) const;
     virtual OGRBoolean  Crosses( const OGRGeometry * ) const;
     virtual OGRBoolean  Within( const OGRGeometry * ) const;
+    virtual OGRBoolean  WithinEx(GEOSContextHandle_t hGEOSCtxt, const OGRGeometry *poOtherGeom ) const;
     virtual OGRBoolean  Contains( const OGRGeometry * ) const;
     virtual OGRBoolean  Overlaps( const OGRGeometry * ) const;
 //    virtual OGRBoolean  Relate( const OGRGeometry *, const char * ) const;

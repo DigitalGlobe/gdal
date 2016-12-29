@@ -4756,7 +4756,26 @@ OGRGeometry::Within( UNUSED_IF_NO_GEOS const OGRGeometry *poOtherGeom ) const
 
 #endif  // HAVE_GEOS
 }
+OGRBoolean
+OGRGeometry::WithinEx(GEOSContextHandle_t hGEOSCtxt, const OGRGeometry *poOtherGeom ) const
+{
+    GEOSGeom hThisGeosGeom = NULL;
+    GEOSGeom hOtherGeosGeom = NULL;
+    OGRBoolean bResult = FALSE;
 
+
+    hThisGeosGeom = exportToGEOS(hGEOSCtxt);
+    hOtherGeosGeom = poOtherGeom->exportToGEOS(hGEOSCtxt);
+    if( hThisGeosGeom != NULL && hOtherGeosGeom != NULL )
+    {
+        bResult = GEOSWithin_r( hGEOSCtxt, hThisGeosGeom, hOtherGeosGeom );
+    }
+    GEOSGeom_destroy_r( hGEOSCtxt, hThisGeosGeom );
+    GEOSGeom_destroy_r( hGEOSCtxt, hOtherGeosGeom );
+
+
+    return bResult;
+}
 /************************************************************************/
 /*                            OGR_G_Within()                            */
 /************************************************************************/
